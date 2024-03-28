@@ -42,7 +42,7 @@ export default {
         // 设置上传的请求头部(没有登录模块，暂时注释掉)
         //headers: {Authorization: "Bearer " + getToken()},
         // 上传的地址
-        url: "http://localhost:9090/files/upload",
+        url: "/dev-api/files/upload",
       },
       fileList: [],
     };
