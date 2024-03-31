@@ -7,7 +7,12 @@
         style="width: 100%; height: auto"
       />
     </el-header>
-    <el-container style="justify-content: space-between; height: 73vh">
+    <el-container
+      :style="{
+        justifyContent: 'space-between',
+        height: isBigRatio ? '64.8vh' : '73vh',
+      }"
+    >
       <div class="sideBox">
         <CircleInfo :percentage="50" num="44444" target="88888" />
         <LittleInfoGroup />
@@ -54,12 +59,18 @@ export default {
     return {
       //进度条进度
       percentage: 50,
+      isBigRatio: false,
     };
   },
   methods: {
     format(percentage) {
       return percentage + "%距离88888只进度";
     },
+  },
+  mounted() {
+    window.screen.width * window.devicePixelRatio > 3840
+      ? (this.isBigRatio = true)
+      : (this.isBigRatio = false);
   },
 };
 </script>
@@ -91,7 +102,7 @@ export default {
 .el-divider--vertical {
   display: inline-block;
   width: 1px;
-  height: 73vh;
+  height: auto;
   margin: 0 8px;
   vertical-align: middle;
   position: relative;
