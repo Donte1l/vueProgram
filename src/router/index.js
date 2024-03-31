@@ -4,10 +4,16 @@ import MainBox from "@/views/MainBox.vue";
 import List from "@/views/list/List.vue";
 import Upload from "@/views/upload/Upload.vue";
 import NotFound from "@/views/notFound/NotFound.vue";
+import Manager from "@/views/manager/Manager.vue";
 
 Vue.use(VueRouter);
 
 const routes = [
+  {
+    path: "/manager",
+    name: "manager",
+    component: Manager,
+  },
   {
     path: "/mainBox",
     name: "mainBox",
@@ -25,7 +31,7 @@ const routes = [
   },
   {
     path: "/",
-    redirect: "/list", // 默认重定向到List
+    redirect: "/manager", // 默认重定向到List
   },
   {
     path: "/:pathMatch(.*)*",
