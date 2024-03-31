@@ -14,8 +14,8 @@
           <span>数据中心</span>
         </template>
         <el-menu-item index="/center">简介</el-menu-item>
-        <el-menu-item index="/list">玩家捕捉记录</el-menu-item>
-        <el-menu-item index="/upload">玩家上下线记录</el-menu-item>
+        <el-menu-item index="/catchList">玩家捕捉记录</el-menu-item>
+        <el-menu-item index="/signList">玩家上下线记录</el-menu-item>
       </el-submenu>
     </el-menu>
   </el-aside>

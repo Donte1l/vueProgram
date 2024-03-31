@@ -43,12 +43,10 @@
         </el-tab-pane>
         <el-tab-pane disabled>
           <slot slot="label">
-            <span style="margin-left: 20px; margin-right: 10px; color: #000000"
-              >捕捉状态</span
-            >
+            <span style="margin-left: 20px; margin-right: 10px">捕捉状态</span>
             <el-select
               v-model="params.istrue"
-              placeholder="请选择"
+              placeholder=""
               :disabled="activeName == 'second' || activeName == 'third'"
               clearable
             >
@@ -61,15 +59,11 @@
               </el-option>
             </el-select>
 
-            <span style="margin-left: 20px; margin-right: 10px; color: #000000"
-              >玩家id</span
-            >
-            <el-input v-model="params.playername" placeholder="请输入" />
+            <span style="margin-left: 20px; margin-right: 10px">玩家id</span>
+            <el-input v-model="params.playername" />
 
-            <span style="margin-left: 20px; margin-right: 10px; color: #000000"
-              >捕捉球类</span
-            >
-            <el-select v-model="params.pokeball" placeholder="请选择" clearable>
+            <span style="margin-left: 20px; margin-right: 10px">捕捉球类</span>
+            <el-select v-model="params.pokeball" clearable placeholder="">
               <el-option
                 v-for="item in options2"
                 :key="item.value"
@@ -79,15 +73,13 @@
               </el-option>
             </el-select>
 
-            <span style="margin-left: 20px; margin-right: 10px; color: #000000"
-              >捕捉时间</span
-            >
+            <span style="margin-left: 20px; margin-right: 10px">捕捉时间</span>
             <el-date-picker
               v-model="params.captureTime"
               align="right"
               type="date"
-              placeholder="选择日期"
               :picker-options="pickerOptions"
+              placeholder=""
             >
             </el-date-picker>
 
@@ -98,6 +90,7 @@
                 margin-left: 20px;
                 margin-right: 20px;
                 color: #3d7fff;
+                cursor: pointer;
               "
               @click="handleSearch"
             />
@@ -131,6 +124,27 @@ export default {
         playername: null,
         isshiny: null,
         istrue: null,
+      },
+      pickerOptions: {
+        disabledDate(time) {
+          return time.getTime() > Date.now();
+        },
+        shortcuts: [
+          {
+            text: "今天",
+            onClick(picker) {
+              picker.$emit("pick", new Date());
+            },
+          },
+          {
+            text: "昨天",
+            onClick(picker) {
+              const date = new Date();
+              date.setTime(date.getTime() - 3600 * 1000 * 24);
+              picker.$emit("pick", date);
+            },
+          },
+        ],
       },
       options1: [
         {
@@ -264,20 +278,34 @@ export default {
   methods: {
     getList() {
       this.loading = true;
-      maxPokeCatchCount().then((res) => {
+      maxPokeCatchCount(this.params).then((res) => {
         this.tableData = res.data.items.slice();
         this.total = res.data.total;
         this.loading = false;
       });
     },
+    reset() {
+      this.params.pageSize = "10";
+      this.params.pageNum = "1";
+      this.params.captureTime = null;
+      this.params.pokeball = null;
+      this.params.playername = null;
+      this.params.isshiny = null;
+      this.params.istrue = null;
+    },
     handleSearch() {
-      if (activeName === "second") this.params.istrue = "1";
-      else if (activeName === "third") this.params.istrue = "2";
+      //this.getList();
     },
     handleClickTab(tab, event) {
-      if (tab.$options.propsData.name === "second") this.params.istrue = "1";
-      else if (tab.$options.propsData.name === "third")
+      if (tab.$options.propsData.name === "first") this.reset();
+      else if (tab.$options.propsData.name === "second") {
+        this.reset();
+        this.params.istrue = "1";
+      } else if (tab.$options.propsData.name === "third") {
+        this.reset();
         this.params.istrue = "2";
+      }
+      //this.getList();
     },
   },
 };
@@ -287,8 +315,13 @@ export default {
 ::v-deep .el-tabs__nav {
   width: 100%;
 }
+::v-deep .el-tabs__item {
+  font-family: YouShe;
+  color: #666666;
+}
 ::v-deep .el-tabs__item.is-top:last-child {
   float: right;
+  color: #999999;
   margin-bottom: 10px;
 }
 ::v-deep .el-color-picker__icon,
@@ -299,6 +332,15 @@ export default {
 }
 ::v-deep .el-date-editor.el-input,
 .el-date-editor.el-input__inner {
-  width: 120px;
+  width: 140px;
+}
+
+::v-deep .el-table {
+  font-family: "YouShe";
+  color: #333333;
+}
+
+::v-deep .el-table th .cell {
+  font-weight: normal;
 }
 </style>

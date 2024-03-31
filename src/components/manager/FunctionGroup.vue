@@ -8,12 +8,12 @@
       <Function
         :title="'传送'"
         :info="'点我前往捕捉精灵详情页面'"
-        :address="'a'"
+        :address="'/catchList'"
       />
       <Function
         :title="'传送'"
-        :info="'点我前往捕捉精灵详情页面'"
-        :address="'a'"
+        :info="'点我前往玩家上下线信息页面'"
+        :address="'/signList'"
       />
       <Function />
       <Function />

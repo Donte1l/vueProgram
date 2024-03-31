@@ -25,11 +25,11 @@ const routes = [
         component: Center,
       },
       {
-        path: "/list",
+        path: "/catchList",
         component: CatchList,
       },
       {
-        path: "/upload",
+        path: "/signList",
         component: SignList,
       },
     ],
