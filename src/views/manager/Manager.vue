@@ -7,18 +7,22 @@
         style="width: 100%; height: auto"
       />
     </el-header>
-    <el-container style="justify-content: space-between; height: 90vh">
+    <el-container style="justify-content: space-between; height: 73vh">
       <div class="sideBox">
-        <p style="color: white; font-size: 10px; margin-left: auto">
-          ps: 页面所有数据都是3s获取一次 动态更新
-        </p>
         <CircleInfo :percentage="50" num="44444" target="88888" />
         <LittleInfoGroup />
       </div>
       <el-divider direction="vertical"></el-divider>
-      <div class="mainBox"><SystemInfo /></div>
+      <div class="mainBox">
+        <SystemInfo />
+        <MiddleInfoGroup />
+        <PlayerList />
+      </div>
       <el-divider direction="vertical"></el-divider>
-      <div class="sideBox">right</div>
+      <div class="sideBox">
+        <FunctionGroup />
+        <CatchNews />
+      </div>
     </el-container>
   </el-container>
 </template>
@@ -28,9 +32,24 @@ import CircleInfo from "@/components/manager/CircleInfo.vue";
 import LittleInfo from "@/components/manager/LittleInfo.vue";
 import LittleInfoGroup from "@/components/manager/LittleInfoGroup.vue";
 import SystemInfo from "@/components/manager/SystemInfo.vue";
+import MiddleInfo from "@/components/manager/MiddleInfo.vue";
+import MiddleInfoGroup from "@/components/manager/MiddleInfoGroup.vue";
+import PlayerList from "@/components/manager/PlayerList.vue";
+import FunctionGroup from "@/components/manager/FunctionGroup.vue";
+import CatchNews from "@/components/manager/CatchNews.vue";
 export default {
   name: "Manager",
-  components: { SystemInfo, LittleInfoGroup, LittleInfo, CircleInfo },
+  components: {
+    CatchNews,
+    FunctionGroup,
+    PlayerList,
+    MiddleInfoGroup,
+    MiddleInfo,
+    SystemInfo,
+    LittleInfoGroup,
+    LittleInfo,
+    CircleInfo,
+  },
   data() {
     return {
       //进度条进度
@@ -60,7 +79,10 @@ export default {
 }
 .mainBox {
   flex: 2;
-  height: 90vh;
+  display: flex;
+  flex-direction: column;
+  align-content: center;
+  gap: 10px;
 }
 
 .el-divider {
@@ -69,7 +91,7 @@ export default {
 .el-divider--vertical {
   display: inline-block;
   width: 1px;
-  height: 90vh;
+  height: 73vh;
   margin: 0 8px;
   vertical-align: middle;
   position: relative;

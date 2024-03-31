@@ -40,9 +40,9 @@ export default {
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
-  height: 60px;
-  margin-top: 8px;
-  width: calc(50% - 20px);
+  width: 106px;
+  height: 60.1px;
+  margin-top: 12px;
   p {
     margin-top: 2px;
     margin-left: 5px;

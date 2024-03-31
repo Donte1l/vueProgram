@@ -1,0 +1,43 @@
+<template>
+  <div class="middleInfoGroup">
+    <MiddleInfo :info="'342人'" :title="'当前在线玩家数量'" :color="color1" />
+    <MiddleInfo :info="'1.12.2'" :title="'当前服务器版本'" :color="color2" />
+    <MiddleInfo :info="'星穹'" :title="'服务器名称'" :color="color1" />
+    <MiddleInfo :info="'老高'" :title="'腐竹名称'" :color="color2" />
+    <MiddleInfo :info="'氪金'" :title="'充值地址'" :color="color1" />
+    <a
+      style="
+        position: absolute;
+        color: white;
+        font-size: 7px;
+        margin-top: 75px;
+        margin-left: 470px;
+      "
+      >点击跳转</a
+    >
+  </div>
+</template>
+<script>
+import MiddleInfo from "@/components/manager/MiddleInfo.vue";
+
+export default {
+  name: "MiddleInfoGroup",
+  components: { MiddleInfo },
+  data() {
+    return {
+      color1: "#66FFFF",
+      color2: "#FFBE44",
+    };
+  },
+};
+</script>
+
+<style scoped>
+.middleInfoGroup {
+  margin-top: 40px;
+  display: flex;
+  justify-content: space-around; /* 水平居中 */
+  align-items: center; /* 垂直居中 */
+  flex-wrap: nowrap;
+}
+</style>

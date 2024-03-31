@@ -34,8 +34,8 @@ export default {
   components: { LittleInfo },
   data() {
     return {
-      color1: "rgb(102, 255, 255)",
-      color2: "rgb(254, 219, 101)",
+      color1: "#66FFFF",
+      color2: "#FFBE44",
     };
   },
 };

@@ -1,12 +1,12 @@
 <template>
   <div>
-    <p>服务器CPU型号：I9-14900K</p>
     <div class="systemInfo">
       <div class="cpu">
         <p style="font-family: YouShe; font-size: 30px">50%</p>
         <p style="font-size: 10px">CPU占用</p>
       </div>
       <div class="progress">
+        <p class="top">服务器CPU型号：I9-14900K</p>
         <p style="font-size: 8px">
           服务器总内存:[32G] 当前使用: [11G]空闲内存: [21G]
         </p>
@@ -47,7 +47,19 @@ export default {
   }
   .progress {
     flex: 2;
-    margin-top: 60px;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 10px;
+    p {
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .top {
+      font-size: 12px;
+      color: white;
+    }
   }
   .memory {
     flex: 1.3;
@@ -58,8 +70,9 @@ export default {
     text-align: center;
   }
   .el-progress {
-    width: 200px;
-    margin: 10px auto auto 10px;
+    width: 80%;
+    margin-left: auto;
+    margin-right: auto;
   }
 }
 </style>
