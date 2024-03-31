@@ -1,10 +1,11 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
 import MainBox from "@/views/MainBox.vue";
-import List from "@/views/list/List.vue";
-import Upload from "@/views/upload/Upload.vue";
+import CatchList from "@/views/catchList/CatchList.vue";
 import NotFound from "@/views/notFound/NotFound.vue";
 import Manager from "@/views/manager/Manager.vue";
+import Center from "@/views/center/Center.vue";
+import SignList from "@/views/signList/SignList.vue";
 
 Vue.use(VueRouter);
 
@@ -20,12 +21,16 @@ const routes = [
     component: MainBox,
     children: [
       {
+        path: "/center",
+        component: Center,
+      },
+      {
         path: "/list",
-        component: List,
+        component: CatchList,
       },
       {
         path: "/upload",
-        component: Upload,
+        component: SignList,
       },
     ],
   },

@@ -1,19 +1,21 @@
 <template>
-  <el-aside :width="$store.state.isCollapsed ? '80px' : '200px'">
-    <!--    <h5>默认颜色</h5>-->
+  <el-aside :width="$store.state.isCollapsed ? '80px' : '150px'">
     <el-menu
       :collapse="$store.state.isCollapsed"
       :collapse-transition="false"
       :router="true"
       :default-active="this.$route.path"
     >
+      <el-button type="primary" size="small">点击反馈</el-button>
+      <el-divider />
       <el-submenu index="fileManger">
         <template slot="title">
           <i class="el-icon-document"></i>
-          <span>文件管理</span>
+          <span>数据中心</span>
         </template>
-        <el-menu-item index="/upload">文件上传</el-menu-item>
-        <el-menu-item index="/list">文件列表</el-menu-item>
+        <el-menu-item index="/center">简介</el-menu-item>
+        <el-menu-item index="/list">玩家捕捉记录</el-menu-item>
+        <el-menu-item index="/upload">玩家上下线记录</el-menu-item>
       </el-submenu>
     </el-menu>
   </el-aside>
@@ -22,6 +24,7 @@
 <script>
 export default {
   name: "SideMenu",
+  mounted() {},
 };
 </script>
 
@@ -30,10 +33,35 @@ export default {
   height: 100vh;
   .el-menu {
     height: 100vh;
+    display: flex;
+
+    flex-direction: column;
   }
 }
-::-webkit-scrollbar {
-  width: 5px;
-  position: absolute;
+.el-divider--horizontal {
+  margin: 5.5px auto;
+  width: 120px;
+}
+
+/deep/ .el-submenu__title {
+  font-size: 10px !important;
+  height: 30px !important;
+  line-height: 30px !important;
+}
+
+/deep/ .el-button--small {
+  font-size: 10px !important;
+  width: 120px !important;
+  margin-left: auto !important;
+  margin-right: auto !important;
+  margin-top: 5.5px !important;
+}
+
+/deep/ .el-menu-item {
+  height: 30px !important;
+  line-height: 30px !important;
+  padding: 0 45px 0 50px !important;
+  min-width: 0px !important;
+  font-size: 10px !important;
 }
 </style>
