@@ -15,7 +15,12 @@
       <p class="updateTime">更新时间 {{ updateTime }}</p>
     </div>
     <div class="contents">
-      <div v-for="(item, index) in filteredNews" :key="index" class="content">
+      <div
+        v-if="newList"
+        v-for="(item, index) in newList"
+        :key="index"
+        class="content"
+      >
         <p>{{ item.content }}</p>
         <p>{{ item.time }}</p>
       </div>
@@ -29,70 +34,19 @@
 <script>
 export default {
   name: "CatchNews",
-  data() {
-    return {
-      updateTime: "xx-xx-xx xx:xx:xx",
-      newsContent: [
-        {
-          content: "精灵捕捉成功",
-          time: "xx-xx-xx xx:xx:xx",
-        },
-        {
-          content: "精灵捕捉成功",
-          time: "xx-xx-xx xx:xx:xx",
-        },
-        {
-          content: "精灵捕捉成功",
-          time: "xx-xx-xx xx:xx:xx",
-        },
-        {
-          content: "精灵捕捉成功",
-          time: "xx-xx-xx xx:xx:xx",
-        },
-        {
-          content: "精灵捕捉成功",
-          time: "xx-xx-xx xx:xx:xx",
-        },
-        {
-          content: "精灵捕捉成功",
-          time: "xx-xx-xx xx:xx:xx",
-        },
-        {
-          content: "精灵捕捉成功",
-          time: "xx-xx-xx xx:xx:xx",
-        },
-        {
-          content: "精灵捕捉成功",
-          time: "xx-xx-xx xx:xx:xx",
-        },
-        {
-          content: "精灵捕捉成功",
-          time: "xx-xx-xx xx:xx:xx",
-        },
-        {
-          content: "精灵捕捉成功",
-          time: "xx-xx-xx xx:xx:xx",
-        },
-        {
-          content: "精灵捕捉成功",
-          time: "xx-xx-xx xx:xx:xx",
-        },
-        {
-          content: "精灵捕捉成功",
-          time: "xx-xx-xx xx:xx:xx",
-        },
-      ],
-    };
+  props: {
+    updateTime: {
+      type: String,
+      required: true,
+    },
+    newList: {
+      type: Array,
+      required: true,
+    },
   },
   methods: {
     gotoNews() {
       this.$router.push("/news");
-    },
-  },
-  computed: {
-    filteredNews() {
-      // 使用计算属性来返回前 20 条新闻内容
-      return this.newsContent.slice(0, 12);
     },
   },
 };
