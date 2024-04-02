@@ -270,6 +270,7 @@ export default {
           label: "梦境球",
         },
       ],
+      test: "",
     };
   },
   created() {
