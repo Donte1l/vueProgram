@@ -1,7 +1,16 @@
 <template>
   <div class="middleInfoGroup">
-    <MiddleInfo :info="'342人'" :title="'当前在线玩家数量'" :color="color1" />
-    <MiddleInfo :info="'1.12.2'" :title="'当前服务器版本'" :color="color2" />
+    <MiddleInfo
+      :info="result.onlinePlayers"
+      :title="'当前在线玩家数量'"
+      :color="color1"
+    />
+    <MiddleInfo
+      v-if="result && result.version"
+      :info="result.version.split('-')[0]"
+      :title="'当前服务器版本'"
+      :color="color2"
+    />
     <MiddleInfo :info="'星穹'" :title="'服务器名称'" :color="color1" />
     <MiddleInfo :info="'老高'" :title="'腐竹名称'" :color="color2" />
     <MiddleInfo :info="'氪金'" :title="'充值地址'" :color="color1" />
@@ -23,6 +32,12 @@ import MiddleInfo from "@/components/manager/MiddleInfo.vue";
 export default {
   name: "MiddleInfoGroup",
   components: { MiddleInfo },
+  props: {
+    result: {
+      type: Object,
+      required: true,
+    },
+  },
   data() {
     return {
       color1: "#66FFFF",

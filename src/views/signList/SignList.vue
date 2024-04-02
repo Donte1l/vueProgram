@@ -2,27 +2,9 @@
   <div>
     <el-card>
       <el-tabs v-model="activeName" @tab-click="handleClickTab">
-        <el-tab-pane label="全部记录" name="first">
-          <el-table v-loading="loading" :data="tableData1" style="width: 100%">
-            <el-table-column prop="playername" label="玩家ID" />
-            <el-table-column prop="createtime" label="操作时间" />
-            <el-table-column prop="oper" label="操作状态" />
-          </el-table>
-        </el-tab-pane>
-        <el-tab-pane label="上线记录" name="second">
-          <el-table v-loading="loading" :data="tableData2" style="width: 100%">
-            <el-table-column prop="playername" label="玩家ID" />
-            <el-table-column prop="createtime" label="操作时间" />
-            <el-table-column prop="oper" label="操作状态" />
-          </el-table>
-        </el-tab-pane>
-        <el-tab-pane label="下线记录" name="third">
-          <el-table v-loading="loading" :data="tableData3" style="width: 100%">
-            <el-table-column prop="playername" label="玩家ID" />
-            <el-table-column prop="createtime" label="操作时间" />
-            <el-table-column prop="oper" label="操作状态" />
-          </el-table>
-        </el-tab-pane>
+        <el-tab-pane label="全部记录" name="first"> </el-tab-pane>
+        <el-tab-pane label="上线记录" name="second"> </el-tab-pane>
+        <el-tab-pane label="下线记录" name="third"> </el-tab-pane>
         <el-tab-pane disabled>
           <slot slot="label">
             <span style="margin-left: 20px; margin-right: 10px">玩家id</span>
@@ -32,6 +14,7 @@
             <el-date-picker
               v-model="params.captureTime"
               align="right"
+              value-format="yyyy-MM-dd"
               type="date"
               :picker-options="pickerOptions"
             >
@@ -51,6 +34,28 @@
           </slot>
         </el-tab-pane>
       </el-tabs>
+      <el-table
+        :header-cell-style="{ 'text-align': 'center' }"
+        :cell-style="cellStyle"
+        v-loading="loading"
+        :data="tableData"
+        style="width: 100%"
+      >
+        <el-table-column prop="playername" label="玩家ID" />
+        <el-table-column prop="createtime" label="操作时间" />
+        <el-table-column prop="oper" label="操作状态">
+          <template slot-scope="scope">
+            <div v-if="scope.row.oper === 'join'">
+              <i class="dotClass" style="background-color: #1677ff" />
+              <span>登录服务器</span>
+            </div>
+            <div v-else-if="scope.row.oper === 'quit'">
+              <i class="dotClass" style="background-color: #ff3b30" />
+              <span>退出服务器</span>
+            </div>
+          </template>
+        </el-table-column>
+      </el-table>
     </el-card>
   </div>
 </template>
@@ -62,14 +67,14 @@ export default {
   data() {
     return {
       activeName: "first",
-      tableData1: [],
-      tableData2: [],
-      tableData3: [],
+      tableData: [],
+      total: 0,
       params: {
         pageSize: "10",
         pageNum: "1",
         captureTime: null,
         playername: null,
+        isOnlineOrOffline: null,
       },
       pickerOptions: {
         disabledDate(time) {
@@ -96,30 +101,42 @@ export default {
     };
   },
   created() {
-    //this.getList();
+    this.getList();
   },
   methods: {
     getList() {
       this.loading = true;
       serverOnlineQuitMsg(this.params).then((res) => {
-        this.tableData = res.data.items.slice();
-        this.total = res.data.total;
+        this.tableData = res.result.content.slice();
+        this.total = res.result.totalSize;
         this.loading = false;
       });
     },
+    reset() {
+      this.params.pageSize = "10";
+      this.params.pageNum = "1";
+      this.params.playername = null;
+      this.params.captureTime = null;
+      this.params.isOnlineOrOffline = null;
+    },
     handleSearch() {
-      //this.getList();
+      this.getList();
     },
     handleClickTab(tab, event) {
       if (tab.$options.propsData.name === "first") this.reset();
       else if (tab.$options.propsData.name === "second") {
         this.reset();
-        //this.params.istrue = "1";
+        this.params.isOnlineOrOffline = "join";
       } else if (tab.$options.propsData.name === "third") {
         this.reset();
-        //this.params.istrue = "2";
+        this.params.isOnlineOrOffline = "quit";
       }
-      //this.getList();
+      this.getList();
+    },
+    cellStyle({ row, column, rowIndex, columnIndex }) {
+      if (column.label === "玩家ID") {
+        return { color: "#1677FF", textAlign: "center" };
+      } else return { textAlign: "center" };
     },
   },
 };
@@ -157,5 +174,14 @@ export default {
 
 ::v-deep .el-table th .cell {
   font-weight: normal;
+}
+
+.dotClass {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  display: block;
+  margin-right: 10px;
+  display: inline-block;
 }
 </style>

@@ -2,45 +2,9 @@
   <div>
     <el-card>
       <el-tabs v-model="activeName" @tab-click="handleClickTab">
-        <el-tab-pane label="全部记录" name="first">
-          <el-table v-loading="loading" :data="tableData1" style="width: 100%">
-            <el-table-column prop="playername" label="玩家ID" />
-            <el-table-column prop="chinesename" label="捕捉时间" />
-            <el-table-column prop="istrue" label="捕捉状态" />
-            <el-table-column prop="chinesename" label="精灵名称" />
-            <el-table-column prop="isshiny" label="是否闪光" />
-            <el-table-column prop="level" label="等级" />
-            <el-table-column prop="health" label="血量" />
-            <el-table-column prop="pokeball" label="捕捉球" />
-            <el-table-column prop="uploadTime" label="特性" />
-          </el-table>
-        </el-tab-pane>
-        <el-tab-pane label="成功记录" name="second">
-          <el-table v-loading="loading" :data="tableData2" style="width: 100%">
-            <el-table-column prop="playername" label="玩家ID" />
-            <el-table-column prop="chinesename" label="捕捉时间" />
-            <el-table-column prop="istrue" label="捕捉状态" />
-            <el-table-column prop="chinesename" label="精灵名称" />
-            <el-table-column prop="isshiny" label="是否闪光" />
-            <el-table-column prop="level" label="等级" />
-            <el-table-column prop="health" label="血量" />
-            <el-table-column prop="pokeball" label="捕捉球" />
-            <el-table-column prop="uploadTime" label="特性" />
-          </el-table>
-        </el-tab-pane>
-        <el-tab-pane label="失败记录" name="third">
-          <el-table v-loading="loading" :data="tableData3" style="width: 100%">
-            <el-table-column prop="playername" label="玩家ID" />
-            <el-table-column prop="chinesename" label="捕捉时间" />
-            <el-table-column prop="istrue" label="捕捉状态" />
-            <el-table-column prop="chinesename" label="精灵名称" />
-            <el-table-column prop="isshiny" label="是否闪光" />
-            <el-table-column prop="level" label="等级" />
-            <el-table-column prop="health" label="血量" />
-            <el-table-column prop="pokeball" label="捕捉球" />
-            <el-table-column prop="uploadTime" label="特性" />
-          </el-table>
-        </el-tab-pane>
+        <el-tab-pane label="全部记录" name="first"> </el-tab-pane>
+        <el-tab-pane label="成功记录" name="second"> </el-tab-pane>
+        <el-tab-pane label="失败记录" name="third"> </el-tab-pane>
         <el-tab-pane disabled>
           <slot slot="label">
             <span style="margin-left: 20px; margin-right: 10px">捕捉状态</span>
@@ -78,6 +42,7 @@
               v-model="params.captureTime"
               align="right"
               type="date"
+              value-format="yyyy-MM-dd"
               :picker-options="pickerOptions"
               placeholder=""
             >
@@ -96,6 +61,44 @@
             />
           </slot>
         </el-tab-pane>
+        <el-table
+          v-loading="loading"
+          :data="tableData"
+          style="width: 100%"
+          :header-cell-style="{ 'text-align': 'center' }"
+          :cell-style="cellStyle"
+          align="center"
+        >
+          <el-table-column prop="playername" label="玩家ID" />
+          <el-table-column prop="capturetime" label="捕捉时间" />
+          <el-table-column prop="istrue" label="捕捉状态">
+            <template slot-scope="scope">
+              <div v-if="scope.row.istrue === '捕捉成功 T'">
+                <i class="dotClass" style="background-color: #1677ff" />
+                <span>成功</span>
+              </div>
+              <div v-else-if="scope.row.istrue === '捕捉失败 F'">
+                <i class="dotClass" style="background-color: #ff3b30" />
+                <span>失败</span>
+              </div>
+            </template>
+          </el-table-column>
+          <el-table-column prop="chinesename" label="精灵名称(中文)" />
+          <el-table-column prop="englishname" label="精灵名称(英文)" />
+          <el-table-column prop="isshiny" label="是否闪光">
+            <template slot-scope="scope">
+              <span v-if="scope.row.isshiny === '闪光'" style="color: #ffeb3b"
+                >是</span
+              >
+              <span v-else-if="scope.row.isshiny === '非闪光'">否</span>
+              <span v-else>{{ scope.row.isshiny }}</span>
+            </template>
+          </el-table-column>
+          <el-table-column prop="level" label="等级" />
+          <el-table-column prop="health" label="血量" />
+          <el-table-column prop="pokeball" label="捕捉球" />
+          <el-table-column prop="abilityname" label="特性" />
+        </el-table>
       </el-tabs>
     </el-card>
   </div>
@@ -109,10 +112,8 @@ export default {
   data() {
     return {
       activeName: "first",
-      total: 1,
-      tableData1: [],
-      tableData2: [],
-      tableData3: [],
+      tableData: [],
+      total: 0,
       loading: false,
       bizId: "0",
       dialogFormVisible: false,
@@ -274,14 +275,14 @@ export default {
     };
   },
   created() {
-    //this.getList();
+    this.getList();
   },
   methods: {
     getList() {
       this.loading = true;
       maxPokeCatchCount(this.params).then((res) => {
-        this.tableData = res.data.items.slice();
-        this.total = res.data.total;
+        this.tableData = res.result.content.slice();
+        this.total = res.result.totalSize;
         this.loading = false;
       });
     },
@@ -295,7 +296,7 @@ export default {
       this.params.istrue = null;
     },
     handleSearch() {
-      //this.getList();
+      this.getList();
     },
     handleClickTab(tab, event) {
       if (tab.$options.propsData.name === "first") this.reset();
@@ -306,7 +307,12 @@ export default {
         this.reset();
         this.params.istrue = "2";
       }
-      //this.getList();
+      this.getList();
+    },
+    cellStyle({ row, column, rowIndex, columnIndex }) {
+      if (column.label === "玩家ID") {
+        return { color: "#1677FF", textAlign: "center" };
+      } else return { textAlign: "center" };
     },
   },
 };
@@ -343,5 +349,14 @@ export default {
 
 ::v-deep .el-table th .cell {
   font-weight: normal;
+}
+
+.dotClass {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  display: block;
+  margin-right: 10px;
+  display: inline-block;
 }
 </style>

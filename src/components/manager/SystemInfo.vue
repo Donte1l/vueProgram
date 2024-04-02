@@ -2,22 +2,34 @@
   <div>
     <div class="systemInfo">
       <div class="cpu">
-        <p style="font-family: YouShe; font-size: 30px">50%</p>
+        <p style="font-family: YouShe; font-size: 30px">
+          {{ result.cpuPercent }}
+        </p>
         <p style="font-size: 10px">CPU占用</p>
       </div>
       <div class="progress">
-        <p class="top">服务器CPU型号：I9-14900K</p>
+        <p class="top">服务器CPU型号：{{ result.cpuMs }}</p>
         <p style="font-size: 8px">
-          服务器总内存:[32G] 当前使用: [11G]空闲内存: [21G]
+          服务器总内存:[{{ result.maxMemory }}] 当前使用: [{{
+            result.usedMemory
+          }}]空闲内存: [{{ result.freeMemory }}]
         </p>
         <el-progress :percentage="50" :show-text="false" />
         <p style="font-size: 8px">
-          服务器总存储: [512G]当前使用: [200G]空闲内存: [312G]
+          服务器总存储: [{{ result.totalSpace }}]当前使用: [{{
+            result.usableSpace
+          }}]空闲内存: [{{ result.freeSpace }}]
         </p>
         <el-progress :percentage="50" :show-text="false" />
       </div>
       <div class="memory">
-        <p style="font-family: YouShe; font-size: 30px">50%</p>
+        <p style="font-family: YouShe; font-size: 30px">
+          {{
+            Math.round(
+              (parseInt(result.usedMemory) / parseInt(result.maxMemory)) * 100
+            )
+          }}%
+        </p>
         <p style="font-size: 10px">内存占用</p>
       </div>
     </div>
@@ -27,6 +39,12 @@
 <script>
 export default {
   name: "SystemInfo",
+  props: {
+    result: {
+      type: Object,
+      required: true,
+    },
+  },
 };
 </script>
 

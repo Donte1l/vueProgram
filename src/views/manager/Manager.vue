@@ -14,19 +14,23 @@
       }"
     >
       <div class="sideBox">
-        <CircleInfo :percentage="50" num="44444" target="88888" />
-        <LittleInfoGroup />
+        <CircleInfo
+          :percentage="percentage"
+          :num="sumResult.allServerCatchPokeCount"
+          :target="target"
+        />
+        <LittleInfoGroup :result="sumResult" />
       </div>
       <el-divider direction="vertical"></el-divider>
       <div class="mainBox">
-        <SystemInfo />
-        <MiddleInfoGroup />
-        <PlayerList />
+        <SystemInfo :result="serverResult" />
+        <MiddleInfoGroup :result="serverResult" />
+        <PlayerList :playerList="playerListFilter" />
       </div>
       <el-divider direction="vertical"></el-divider>
       <div class="sideBox">
         <FunctionGroup />
-        <CatchNews />
+        <CatchNews :newList="newList" :updateTime="newUpdateTime" />
       </div>
     </el-container>
   </el-container>
@@ -43,6 +47,7 @@ import PlayerList from "@/components/manager/PlayerList.vue";
 import FunctionGroup from "@/components/manager/FunctionGroup.vue";
 import CatchNews from "@/components/manager/CatchNews.vue";
 import { detectZoom } from "@/utils/detectZoom.js";
+import { sumPokeCount, timeGetServerInfo, maxPokeCatchCount } from "@/api/api";
 
 export default {
   name: "Manager",
@@ -60,19 +65,32 @@ export default {
   data() {
     return {
       //进度条进度
-      percentage: 50,
+      target: "80000",
+      percentage: 0,
       isBigRatio: false,
+      sumResult: {
+        todaySumCount: "",
+        todayCatchPokeCountSuccess: "",
+        todayCatchPokeCountError: "",
+        allServerCatchPokeCount: "",
+        allServerCatchPokeCountTarget: "",
+        playerOnlineCount: "",
+        serverOnlineCount: "",
+        serverOfflineCount: "",
+        allServerOnlineCount: "",
+        allServerOfflineCount: "",
+        allServerPlayerOnlineCount: "",
+      },
+      serverResult: {},
+      catchResult: {},
+      playerListFilter: [],
+      newList: [],
+      newUpdateTime: "",
     };
-  },
-  methods: {
-    format(percentage) {
-      return percentage + "%距离88888只进度";
-    },
   },
   mounted() {
     const m = detectZoom();
     if (window.screen.width * window.devicePixelRatio >= 3840) {
-      console.log("m", m);
       switch (m) {
         // 4k屏时屏幕缩放比为100%
         case 100:
@@ -88,7 +106,7 @@ export default {
           break;
         // 4k屏时屏幕缩放比为175%
         case 175:
-          document.body.style.zoom = 100 / 87.4715;
+          document.body.style.zoom = 1.5;
           break;
         case 219:
           document.body.style.zoom = 140 / 100;
@@ -107,6 +125,51 @@ export default {
     window.screen.width * window.devicePixelRatio > 3840
       ? (this.isBigRatio = true)
       : (this.isBigRatio = false);
+
+    sumPokeCount().then((res) => {
+      this.sumResult = res.result;
+      if (
+        this.sumResult.allServerCatchPokeCountTarget &&
+        this.sumResult.allServerCatchPokeCountTarget != ""
+      )
+        this.target = this.sumResult.allServerCatchPokeCountTarget;
+      this.percentage = parseFloat(
+        (
+          parseInt(this.sumResult.allServerCatchPokeCount) /
+          parseInt(this.target)
+        ).toFixed(1)
+      );
+    });
+
+    timeGetServerInfo().then((res) => {
+      this.serverResult = res.result;
+      this.playerListFilter = this.serverResult.playerList
+        .slice(0, 48)
+        .concat(Array(48 - this.serverResult.playerList.length).fill(""));
+    });
+
+    maxPokeCatchCount({ pageSize: "12", pageNum: "1" }).then((res) => {
+      console.log(res);
+      this.catchResult = res.result;
+      this.catchResult.content.slice(0, 12).forEach((item) => {
+        let obj = {
+          content: "",
+          time: "",
+        };
+        obj.content =
+          item.playername +
+          " 捕捉了 " +
+          item.englishname +
+          " 使用 " +
+          item.pokeball +
+          " ";
+        if (item.istrue === "捕捉成功 T") obj.content += "成功！";
+        else obj.content += "失败...";
+        obj.time = item.capturetime;
+        this.newList.push(obj);
+      });
+      this.newUpdateTime = this.newList[0].time;
+    });
   },
 };
 </script>

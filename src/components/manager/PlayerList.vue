@@ -3,9 +3,9 @@
     <div class="top"></div>
     <div class="Players">
       <Player
-        v-for="(player, index) in playersWithFallback"
+        v-for="(player, index) in playerList"
         :key="index"
-        :name="player.name"
+        :name="player"
       />
     </div>
     <a @click="handlerMore" class="more" v-if="playerList.length > 48"
@@ -21,21 +21,10 @@ export default {
   components: {
     Player,
   },
-  data() {
-    return {
-      playerList: [{ name: "Player 1" }, { name: "Player 2" }],
-    };
-  },
-  computed: {
-    playersWithFallback() {
-      // 生成一个固定长度为 48 的数组
-      // 首先包含 playerList 中的所有项
-      // 然后用 { name: '' } 填充剩余位置
-      return this.playerList.slice(0, 48).concat(
-        Array(48 - this.playerList.length)
-          .fill(null)
-          .map(() => ({ name: "" }))
-      );
+  props: {
+    playerList: {
+      type: Array,
+      required: true,
     },
   },
   methods: {

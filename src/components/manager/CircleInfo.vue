@@ -10,7 +10,7 @@
       />
       <div class="text_box">
         <img src="../../assets/images/catchNumCircle.png" class="under-image" />
-        <p class="title">{{ percentage }}</p>
+        <p class="title">{{ percentage }}%</p>
         <p class="text">距离{{ target }}只进度</p>
       </div>
     </div>
@@ -76,16 +76,23 @@ export default {
       position: absolute;
       width: 77px;
       margin-left: -39px;
-      margin-top: -11px;
+      margin-top: -41px;
       z-index: -2; /* 将图片置于其他元素之下 */
     }
     .title {
+      position: absolute;
       color: white;
       font-size: 30px;
+      margin-left: -20px;
+      margin-top: -35px;
     }
     .text {
+      position: absolute;
+      margin-left: -32px;
+      margin-top: 5px;
       color: white;
       font-size: 8px;
+      white-space: nowrap;
     }
   }
 }
