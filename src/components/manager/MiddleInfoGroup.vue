@@ -11,8 +11,16 @@
       :title="'当前服务器版本'"
       :color="color2"
     />
-    <MiddleInfo :info="'星穹'" :title="'服务器名称'" :color="color1" />
-    <MiddleInfo :info="'老高'" :title="'腐竹名称'" :color="color2" />
+    <MiddleInfo
+      :info="serverInfoCheckResult.servername"
+      :title="'服务器名称'"
+      :color="color1"
+    />
+    <MiddleInfo
+      :info="serverInfoCheckResult.fzname"
+      :title="'腐竹名称'"
+      :color="color2"
+    />
     <MiddleInfo :info="'氪金'" :title="'充值地址'" :color="color1" />
     <a
       style="
@@ -22,6 +30,7 @@
         margin-top: 75px;
         margin-left: 470px;
       "
+      :href="'http://' + serverInfoCheckResult.payurl"
       >点击跳转</a
     >
   </div>
@@ -34,6 +43,10 @@ export default {
   components: { MiddleInfo },
   props: {
     result: {
+      type: Object,
+      required: true,
+    },
+    serverInfoCheckResult: {
       type: Object,
       required: true,
     },

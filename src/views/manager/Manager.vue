@@ -17,14 +17,17 @@
         <CircleInfo
           :percentage="percentage"
           :num="sumResult.allServerCatchPokeCount"
-          :target="target"
+          :target="serverInfoCheckResult.maxcount"
         />
         <LittleInfoGroup :result="sumResult" />
       </div>
       <el-divider direction="vertical"></el-divider>
       <div class="mainBox">
         <SystemInfo :result="serverResult" />
-        <MiddleInfoGroup :result="serverResult" />
+        <MiddleInfoGroup
+          :result="serverResult"
+          :serverInfoCheckResult="serverInfoCheckResult"
+        />
         <PlayerList :playerList="playerListFilter" />
       </div>
       <el-divider direction="vertical"></el-divider>
@@ -47,7 +50,12 @@ import PlayerList from "@/components/manager/PlayerList.vue";
 import FunctionGroup from "@/components/manager/FunctionGroup.vue";
 import CatchNews from "@/components/manager/CatchNews.vue";
 import { detectZoom } from "@/utils/detectZoom.js";
-import { sumPokeCount, timeGetServerInfo, maxPokeCatchCount } from "@/api/api";
+import {
+  sumPokeCount,
+  timeGetServerInfo,
+  maxPokeCatchCount,
+  serverInfoCheck,
+} from "@/api/api";
 
 export default {
   name: "Manager",
@@ -65,7 +73,6 @@ export default {
   data() {
     return {
       //进度条进度
-      target: "80000",
       percentage: 0,
       isBigRatio: false,
       sumResult: {
@@ -86,10 +93,18 @@ export default {
       playerListFilter: [],
       newList: [],
       newUpdateTime: "",
+      serverInfoCheckResult: {
+        maxcount: "100",
+      },
+      // 定时器
+      pollingST: null,
     };
   },
   mounted() {
     const m = detectZoom();
+    console.log("detectZoom", m);
+    console.log("宽度", window.screen.width * window.devicePixelRatio);
+    console.log("高度", window.screen.height * window.devicePixelRatio);
     if (window.screen.width * window.devicePixelRatio >= 3840) {
       switch (m) {
         // 4k屏时屏幕缩放比为100%
@@ -125,51 +140,68 @@ export default {
     window.screen.width * window.devicePixelRatio > 3840
       ? (this.isBigRatio = true)
       : (this.isBigRatio = false);
-
-    sumPokeCount().then((res) => {
-      this.sumResult = res.result;
-      if (
-        this.sumResult.allServerCatchPokeCountTarget &&
-        this.sumResult.allServerCatchPokeCountTarget != ""
-      )
-        this.target = this.sumResult.allServerCatchPokeCountTarget;
-      this.percentage = parseFloat(
-        (
-          parseInt(this.sumResult.allServerCatchPokeCount) /
-          parseInt(this.target)
-        ).toFixed(1)
-      );
-    });
-
-    timeGetServerInfo().then((res) => {
-      this.serverResult = res.result;
-      this.playerListFilter = this.serverResult.playerList
-        .slice(0, 48)
-        .concat(Array(48 - this.serverResult.playerList.length).fill(""));
-    });
-
-    maxPokeCatchCount({ pageSize: "12", pageNum: "1" }).then((res) => {
-      console.log(res);
-      this.catchResult = res.result;
-      this.catchResult.content.slice(0, 12).forEach((item) => {
-        let obj = {
-          content: "",
-          time: "",
-        };
-        obj.content =
-          item.playername +
-          " 捕捉了 " +
-          item.englishname +
-          " 使用 " +
-          item.pokeball +
-          " ";
-        if (item.istrue === "捕捉成功 T") obj.content += "成功！";
-        else obj.content += "失败...";
-        obj.time = item.capturetime;
-        this.newList.push(obj);
+  },
+  created() {
+    // 调用轮询
+    this.polling();
+  },
+  methods: {
+    polling() {
+      this.work().then((res) => {
+        this.pollingST = setTimeout(() => {
+          clearTimeout(this.pollingST);
+          this.polling();
+        }, 3000);
       });
-      this.newUpdateTime = this.newList[0].time;
-    });
+    },
+    work() {
+      sumPokeCount().then((res) => {
+        this.sumResult = res.result;
+        serverInfoCheck().then((res) => {
+          this.serverInfoCheckResult = res.result;
+          this.percentage = parseFloat(
+            (parseInt(this.sumResult.allServerCatchPokeCount) /
+              parseInt(this.serverInfoCheckResult.maxcount)) *
+              100
+          ).toFixed(1);
+        });
+      });
+
+      timeGetServerInfo().then((res) => {
+        this.serverResult = res.result;
+        this.playerListFilter = this.serverResult.playerList
+          .slice(0, 48)
+          .concat(Array(48 - this.serverResult.playerList.length).fill(""));
+      });
+
+      maxPokeCatchCount({ pageSize: "8", pageNum: "1" }).then((res) => {
+        this.newList = [];
+        this.catchResult = res.result;
+        this.catchResult.content.slice(0, 8).forEach((item) => {
+          let obj = {
+            content: "",
+            time: "",
+          };
+          obj.content =
+            item.playername +
+            " 捕捉了 " +
+            item.englishname +
+            " 使用 " +
+            item.pokeball +
+            " ";
+          if (item.istrue === "捕捉成功 T") obj.content += "成功！";
+          else obj.content += "失败...";
+          obj.time = item.capturetime;
+          this.newList.push(obj);
+        });
+        this.newUpdateTime = this.newList[0].time;
+      });
+
+      return Promise.resolve();
+    },
+  },
+  destroyed() {
+    clearTimeout(this.pollingST);
   },
 };
 </script>
@@ -186,6 +218,7 @@ export default {
   flex-wrap: wrap;
   align-content: flex-start;
   gap: 10px;
+  flex-wrap: nowrap;
 }
 .mainBox {
   flex: 2;
