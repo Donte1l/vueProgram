@@ -4,6 +4,7 @@
       :info="result.onlinePlayers"
       :title="'当前在线玩家数量'"
       :color="color1"
+      :first="true"
     />
     <MiddleInfo
       v-if="result && result.version"
@@ -21,18 +22,12 @@
       :title="'腐竹名称'"
       :color="color2"
     />
-    <MiddleInfo :info="'氪金'" :title="'充值地址'" :color="color1" />
-    <a
-      style="
-        position: absolute;
-        color: white;
-        font-size: 7px;
-        margin-top: 75px;
-        margin-left: 470px;
-      "
-      :href="'http://' + serverInfoCheckResult.payurl"
-      >点击跳转</a
-    >
+    <MiddleInfo
+      :info="'氪金'"
+      :title="'充值地址'"
+      :color="color1"
+      :payurl="serverInfoCheckResult.payurl"
+    />
   </div>
 </template>
 <script>
@@ -62,7 +57,8 @@ export default {
 
 <style scoped>
 .middleInfoGroup {
-  margin-top: 40px;
+  position: relative;
+  top: 5%;
   display: flex;
   justify-content: space-around; /* 水平居中 */
   align-items: center; /* 垂直居中 */

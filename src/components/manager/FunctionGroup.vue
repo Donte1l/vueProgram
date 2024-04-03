@@ -32,9 +32,12 @@ export default {
 
 <style scoped>
 .functionGroup {
+  position: relative;
+  top: 5%;
+  width: 100%;
   p {
     color: white;
-    font-size: 12px;
+    font-size: 1.2rem;
   }
   .title {
     display: flex;
@@ -43,12 +46,13 @@ export default {
     align-items: center;
   }
   .functions {
+    margin-top: 1rem;
+    position: relative;
+    width: 100%;
     display: flex;
     flex-direction: row;
-    gap: 10px;
+    gap: 1rem;
     flex-wrap: wrap;
-    margin-top: 20px;
-    margin-left: 10px;
   }
 }
 </style>

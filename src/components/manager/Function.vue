@@ -37,30 +37,35 @@ export default {
 
 <style lang="less" scoped>
 .function {
+  position: relative;
   background-image: url("../../assets/images/functionBack.png");
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
-  height: 83.4px;
-  width: 124.2px;
+  width: 45%;
+  height: 0;
+  padding-top: calc(139 / 207 * 45%);
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-content: center;
   .title {
+    position: absolute;
+    top: 40%;
+    left: 50%;
+    transform: translate(-50%, -50%);
     color: #66ffff;
-    font-size: 22px;
-    margin-top: 10px;
+    font-size: 2.2rem;
     font-family: YouShe;
   }
   .info {
-    margin-top: 20px;
+    position: absolute;
+    top: 85%;
+    left: 50%;
+    transform: translate(-50%, -50%);
     color: white;
-    font-size: 8px;
-  }
-  p {
-    margin-left: auto;
-    margin-right: auto;
+    font-size: 0.8rem;
+    white-space: nowrap;
   }
 }
 .clickable {

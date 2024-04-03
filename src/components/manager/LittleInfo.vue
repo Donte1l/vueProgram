@@ -1,11 +1,12 @@
 <template>
   <div class="little-info">
-    <p style="color: white; font-size: 13px">{{ title }}</p>
+    <p class="title" style="color: white; font-size: 1rem">{{ title }}</p>
     <p
+      class="context"
       :style="{
         color: color,
         fontFamily: 'YouShe',
-        fontSize: '20px',
+        fontSize: '2.5rem',
       }"
     >
       {{ context }}
@@ -36,16 +37,25 @@ export default {
 
 <style scoped>
 .little-info {
+  position: absolute;
   background-image: url("../../assets/images/infoBack.png");
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
-  width: 106px;
-  height: 60.1px;
-  margin-top: 12px;
-  p {
-    margin-top: 2px;
-    margin-left: 5px;
+  width: 44%;
+  padding-top: calc(124 / 209 * 44%);
+  .title {
+    position: absolute;
+    top: 25%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    white-space: nowrap;
+  }
+  .context {
+    position: absolute;
+    top: 55%;
+    left: 50%;
+    transform: translate(-50%, -50%);
   }
 }
 </style>

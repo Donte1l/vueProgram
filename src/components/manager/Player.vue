@@ -1,6 +1,6 @@
 <template>
   <div class="player">
-    <p style="color: white; font-size: 8px">{{ name }}</p>
+    <p class="playerName">{{ name }}</p>
   </div>
 </template>
 <script>
@@ -21,10 +21,20 @@ export default {
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
-  width: 46.8px;
-  height: 15.6px;
+  width: 10%;
+  height: 0;
+  padding-top: calc(26 / 78 * 10%);
   display: flex;
   justify-content: center;
   align-items: center;
+  position: relative;
+  .playerName {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: white;
+    font-size: 0.8rem;
+  }
 }
 </style>
