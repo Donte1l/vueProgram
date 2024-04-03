@@ -67,7 +67,6 @@
           style="width: 100%"
           :header-cell-style="{ 'text-align': 'center' }"
           :cell-style="cellStyle"
-          align="center"
         >
           <el-table-column prop="playername" label="玩家ID" />
           <el-table-column prop="capturetime" label="捕捉时间" />

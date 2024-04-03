@@ -82,13 +82,13 @@ export default {
     .title {
       position: absolute;
       color: white;
-      font-size: 30px;
-      margin-left: -20px;
-      margin-top: -35px;
+      font-size: 25px;
+      margin-left: -28px;
+      margin-top: -30px;
     }
     .text {
       position: absolute;
-      margin-left: -32px;
+      margin-left: -25px;
       margin-top: 5px;
       color: white;
       font-size: 8px;

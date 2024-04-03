@@ -37,3 +37,10 @@ export function serverOnlineQuitMsg(params) {
     params: params,
   });
 }
+
+export function serverInfoCheck() {
+  return request({
+    url: "/GaoPoke/api/serverInfoCheck",
+    method: "get",
+  });
+}
