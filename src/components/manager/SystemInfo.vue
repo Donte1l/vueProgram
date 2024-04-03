@@ -63,7 +63,7 @@ export default {
   transform: translate(-50%, -50%);
   .cpu {
     position: absolute;
-    top: 30%;
+    top: 25%;
     left: 15%;
     transform: translate(-50%, -50%);
     margin-top: 70px;
@@ -76,8 +76,9 @@ export default {
     display: flex;
     flex-direction: column;
     justify-content: center;
-    gap: 10px;
+    gap: 0.1rem;
     p {
+      margin-top: 1rem;
       margin-left: auto;
       margin-right: auto;
     }
@@ -89,17 +90,18 @@ export default {
   }
   .memory {
     position: absolute;
-    top: 30%;
+    top: 25%;
     left: 85%;
     transform: translate(-50%, -50%);
     margin-top: 70px;
   }
   p {
+    margin: 0;
     color: white;
     text-align: center;
   }
   .el-progress {
-    width: 60%;
+    width: 80%;
     margin-left: auto;
     margin-right: auto;
   }

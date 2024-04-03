@@ -35,7 +35,7 @@ export default {
 };
 </script>
 
-<style scoped>
+<style lang="less" scoped>
 .little-info {
   position: absolute;
   background-image: url("../../assets/images/infoBack.png");
@@ -46,14 +46,14 @@ export default {
   padding-top: calc(124 / 209 * 44%);
   .title {
     position: absolute;
-    top: 25%;
+    top: 10%;
     left: 50%;
     transform: translate(-50%, -50%);
     white-space: nowrap;
   }
   .context {
     position: absolute;
-    top: 55%;
+    top: 20%;
     left: 50%;
     transform: translate(-50%, -50%);
   }

@@ -55,7 +55,7 @@ export default {
 };
 </script>
 
-<style scoped>
+<style lang="less" scoped>
 .middleInfoGroup {
   position: relative;
   top: 5%;

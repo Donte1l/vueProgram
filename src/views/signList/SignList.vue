@@ -1,5 +1,11 @@
 <template>
   <div>
+    <p style="color: #000000; font-family: YouShe; font-size: 24px">
+      玩家记录中心
+    </p>
+    <p style="color: #777777; font-family: YouShe; font-size: 14px">
+      您可以在这里看到所有玩家的上下线信息！
+    </p>
     <el-card>
       <el-tabs v-model="activeName" @tab-click="handleClickTab">
         <el-tab-pane label="全部记录" name="first"> </el-tab-pane>
@@ -56,6 +62,15 @@
           </template>
         </el-table-column>
       </el-table>
+      <!--      <el-pagination-->
+      <!--        v-show="tableData.length > 0"-->
+      <!--        :page-size="10"-->
+      <!--        @current-change="getList"-->
+      <!--        :current-page.sync="params.pageNum"-->
+      <!--        layout="->,total, prev, pager, next, jumper"-->
+      <!--        :total="total"-->
+      <!--      >-->
+      <!--      </el-pagination>-->
     </el-card>
   </div>
 </template>
@@ -71,7 +86,7 @@ export default {
       total: 0,
       params: {
         pageSize: "10",
-        pageNum: "1",
+        pageNum: 1,
         captureTime: null,
         playername: null,
         isOnlineOrOffline: null,
@@ -106,6 +121,7 @@ export default {
   methods: {
     getList() {
       this.loading = true;
+      this.params.pageNum = this.params.pageNum.toString();
       serverOnlineQuitMsg(this.params).then((res) => {
         this.tableData = res.result.content.slice();
         this.total = res.result.totalSize;
@@ -142,7 +158,7 @@ export default {
 };
 </script>
 
-<style scoped>
+<style lang="less" scoped>
 ::v-deep .el-tabs__nav {
   width: 100%;
 }

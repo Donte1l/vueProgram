@@ -42,16 +42,16 @@ export default {
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
-  width: 45%;
+  width: 42%;
   height: 0;
-  padding-top: calc(139 / 207 * 45%);
+  padding-top: calc(139 / 207 * 42%);
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-content: center;
   .title {
     position: absolute;
-    top: 40%;
+    top: 10%;
     left: 50%;
     transform: translate(-50%, -50%);
     color: #66ffff;
@@ -60,7 +60,7 @@ export default {
   }
   .info {
     position: absolute;
-    top: 85%;
+    top: 73%;
     left: 50%;
     transform: translate(-50%, -50%);
     color: white;

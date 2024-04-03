@@ -1,6 +1,8 @@
 <template>
-  <el-header height="40px">
-    <div class="left"></div>
+  <el-header>
+    <div class="left">
+      <div class="logoLeft"></div>
+    </div>
     <div class="right">
       <div class="logo"></div>
     </div>
@@ -13,13 +15,11 @@ export default {
 };
 </script>
 
-<style scoped>
+<style lang="less" scoped>
 .el-header {
   background-color: #ffffff;
   color: white;
   width: 100%;
-  height: 30px;
-  line-height: 30px;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -29,7 +29,15 @@ export default {
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
-  height: 18.5px;
-  width: 130px;
+  height: 1.85rem;
+  width: 13rem;
+}
+.logoLeft {
+  background-image: url("../../assets/images/logoLeft.png");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  height: 3.6rem;
+  width: 17.3rem;
 }
 </style>

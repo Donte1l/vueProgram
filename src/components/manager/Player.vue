@@ -15,7 +15,7 @@ export default {
 };
 </script>
 
-<style scoped>
+<style lang="less" scoped>
 .player {
   background-image: url("../../assets/images/playerBack.png");
   background-size: cover;
@@ -30,7 +30,7 @@ export default {
   position: relative;
   .playerName {
     position: absolute;
-    top: 50%;
+    top: 0%;
     left: 50%;
     transform: translate(-50%, -50%);
     color: white;

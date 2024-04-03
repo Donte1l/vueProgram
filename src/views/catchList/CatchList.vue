@@ -1,5 +1,11 @@
 <template>
   <div>
+    <p style="color: #000000; font-family: YouShe; font-size: 24px">
+      捕捉记录中心
+    </p>
+    <p style="color: #777777; font-family: YouShe; font-size: 14px">
+      在这里,您可以看到所有玩家的捕捉记录!
+    </p>
     <el-card>
       <el-tabs v-model="activeName" @tab-click="handleClickTab">
         <el-tab-pane label="全部记录" name="first"> </el-tab-pane>
@@ -317,7 +323,7 @@ export default {
 };
 </script>
 
-<style scoped>
+<style lang="less" scoped>
 ::v-deep .el-tabs__nav {
   width: 100%;
 }

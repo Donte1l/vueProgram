@@ -6,7 +6,8 @@
         <el-progress
           type="circle"
           :percentage="percentage"
-          :stroke-width="12"
+          :stroke-width="7"
+          :width="105"
           :show-text="false"
           :color="'#F7B500'"
           :define-back-color="'#000000'"
@@ -19,7 +20,8 @@
         <img src="../../assets/images/catchNumCircle.png" class="under-image" />
       </div>
       <div class="circleImg">
-        <p class="allCatchSum">{{ num }}只</p>
+        <span class="allCatchSum">{{ num }}只</span>
+        <p class="reward">进度100%后联系腐竹发放福利</p>
       </div>
     </div>
   </div>
@@ -44,13 +46,12 @@ export default {
 };
 </script>
 
-<style scoped>
+<style lang="less" scoped>
 .catchNumBox {
   position: relative;
   top: 15%;
   left: 50%;
   transform: translate(-50%, -50%);
-  align-items: center;
   background-image: url("../../assets/images/catchNumBack.png");
   background-size: cover;
   background-position: center;
@@ -60,7 +61,7 @@ export default {
   padding-top: calc(167 / 442 * 90%); /* 根据背景图片的原始宽高比计算高度 */
   .bigTitle {
     position: absolute;
-    top: 10%;
+    top: -2%;
     left: 50%;
     transform: translate(-50%, -50%);
     color: white;
@@ -101,7 +102,7 @@ export default {
         z-index: 2;
         .title {
           position: absolute;
-          top: 40%;
+          top: 15%;
           left: 50%;
           transform: translate(-50%, -50%);
           color: white;
@@ -110,11 +111,11 @@ export default {
         }
         .text {
           position: absolute;
-          top: 60%;
+          top: 55%;
           left: 50%;
           transform: translate(-50%, -50%);
           color: white;
-          font-size: 1rem;
+          font-size: 0.7rem;
           white-space: nowrap;
         }
       }
@@ -143,12 +144,22 @@ export default {
       z-index: 0;
       .allCatchSum {
         position: absolute;
-        top: 50%;
+        top: 46%;
         left: 50%;
         transform: translate(-50%, -50%);
         color: white;
-        font-size: 2.5rem;
+        font-size: 3rem;
         font-width: bold;
+        font-family: YouShe;
+      }
+      .reward {
+        position: absolute;
+        top: 75%;
+        left: 69%;
+        transform: translate(-50%, -50%);
+        color: white;
+        font-size: 0.8rem;
+        white-space: nowrap;
       }
     }
   }

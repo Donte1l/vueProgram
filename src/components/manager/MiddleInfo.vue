@@ -49,7 +49,7 @@ export default {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  gap: 20px;
+  gap: 2rem;
   p {
     margin-left: auto;
     margin-right: auto;
@@ -58,12 +58,11 @@ export default {
   }
   .info-text {
     position: absolute;
-    top: 40%;
+    top: 20%;
     left: 50%;
     transform: translate(-50%, -50%);
     font-family: YouShe;
-    font-size: 2rem;
-    font-weight: bold;
+    font-size: 2.2rem;
   }
   .title-text {
     position: absolute;

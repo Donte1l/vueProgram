@@ -30,7 +30,7 @@ export default {
 };
 </script>
 
-<style scoped>
+<style lang="less" scoped>
 .functionGroup {
   position: relative;
   top: 5%;
@@ -51,6 +51,7 @@ export default {
     width: 100%;
     display: flex;
     flex-direction: row;
+    justify-content: space-evenly;
     gap: 1rem;
     flex-wrap: wrap;
   }

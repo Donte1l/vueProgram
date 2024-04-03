@@ -95,7 +95,7 @@ export default {
 };
 </script>
 
-<style scoped>
+<style lang="less" scoped>
 .littleInfoGroup {
   position: relative;
   top: 45%;

@@ -14,18 +14,13 @@ import SideMenu from "@/components/mainBox/SideMenu.vue";
 export default {
   name: "MainBox",
   components: { SideMenu, Navbar },
-  mounted() {
-    document.body.style.zoom = 1;
-  },
+  mounted() {},
 };
 </script>
-<style scoped>
-.el-aside {
-  height: 100vh;
-  padding: 0;
-}
+<style lang="less" scoped>
 .el-container {
   background-color: #f5f5f5;
-  height: 100vh;
+  height: 100%;
+  //width: 100%;
 }
 </style>

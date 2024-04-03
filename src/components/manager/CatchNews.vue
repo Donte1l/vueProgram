@@ -13,7 +13,7 @@
           <p>{{ item.content }}</p>
           <p>{{ item.time }}</p>
         </div>
-        <img class="buttom" src="../../assets/images/newButtom.png" />
+        <img class="bottom" src="../../assets/images/newButtom.png" />
       </div>
       <div class="more" @click="gotoNews">
         <img src="../../assets/images/titileIcon.png" />
@@ -55,12 +55,12 @@ export default {
     align-items: center;
     .updateTime {
       position: relative;
-      margin-top: 0.8rem;
       font-size: 0.7rem;
       color: #999999;
       margin-right: 1rem;
     }
     p {
+      margin: 0;
       color: white;
       font-size: 1.2rem;
     }
@@ -68,7 +68,6 @@ export default {
   .contents {
     display: flex;
     flex-direction: column;
-    gap: 0.5rem;
     margin-top: 0.5rem;
     .content {
       display: flex;
@@ -81,6 +80,10 @@ export default {
         white-space: nowrap;
       }
     }
+    .bottom {
+      margin-top: -2rem;
+      width: 95%;
+    }
     .more {
       display: flex;
       flex-direction: row;
@@ -89,8 +92,8 @@ export default {
       margin-right: 1rem;
     }
   }
-  .buttom {
-    width: 95%;
+  p {
+    margin: 0;
   }
 }
 </style>
