@@ -7,6 +7,8 @@
         :stroke-width="6"
         :width="90"
         :show-text="false"
+        :color="'#D8D8D8'"
+        :define-back-color="'#000000'"
       />
       <div class="text_box">
         <img src="../../assets/images/catchNumCircle.png" class="under-image" />
