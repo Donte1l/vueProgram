@@ -1,5 +1,7 @@
 <template>
-  <el-container style="background-color: rgba(2, 0, 77, 1); height: 100vh">
+  <el-container
+    style="display: flex; background-color: rgba(2, 0, 77, 1); height: 100vh"
+  >
     <el-header class="head">
       <img
         src="@/assets/images/top.png"
@@ -191,7 +193,7 @@ export default {
           .concat(Array(48 - this.serverResult.playerList.length).fill(""));
       });
 
-      maxPokeCatchCount({ pageSize: "8", pageNum: "1" }).then((res) => {
+      maxPokeCatchCount({ pageSize: "1", pageNum: "8" }).then((res) => {
         this.newList = [];
         this.catchResult = res.result;
         const dateObject = new Date(res.date);

@@ -73,9 +73,14 @@
           style="width: 100%"
           :header-cell-style="{ 'text-align': 'center' }"
           :cell-style="cellStyle"
+          table-layout="auto"
         >
           <el-table-column prop="playername" label="玩家ID" />
-          <el-table-column prop="capturetime" label="捕捉时间" />
+          <el-table-column
+            prop="capturetime"
+            label="捕捉时间"
+            :min-width="'100px'"
+          />
           <el-table-column prop="istrue" label="捕捉状态">
             <template slot-scope="scope">
               <div v-if="scope.row.istrue === '捕捉成功 T'">
@@ -104,6 +109,13 @@
           <el-table-column prop="pokeball" label="捕捉球" />
           <el-table-column prop="abilityname" label="特性" />
         </el-table>
+        <el-pagination
+          @current-change="getList"
+          :current-page.sync="params.pageSize"
+          :page-size="10"
+          layout="->,total, prev, pager, next"
+          :total="total"
+        />
       </el-tabs>
     </el-card>
   </div>
@@ -123,14 +135,15 @@ export default {
       bizId: "0",
       dialogFormVisible: false,
       params: {
-        pageSize: 10,
-        pageNum: 1,
+        pageNum: "10",
+        pageSize: "1",
         captureTime: null,
         pokeball: null,
         playername: null,
         isshiny: null,
         istrue: null,
       },
+      pageSize: 1,
       pickerOptions: {
         disabledDate(time) {
           return time.getTime() > Date.now();
@@ -279,12 +292,18 @@ export default {
       test: "",
     };
   },
+  watch: {
+    pageSize(newVal, oldVal) {
+      this.params.pageSize = this.pageSize.toString();
+    },
+  },
   created() {
     this.getList();
   },
   methods: {
     getList() {
       this.loading = true;
+      this.params.pageSize = this.params.pageSize.toString();
       maxPokeCatchCount(this.params).then((res) => {
         this.tableData = res.result.content.slice();
         this.total = res.result.totalSize;
@@ -292,8 +311,8 @@ export default {
       });
     },
     reset() {
-      this.params.pageSize = "10";
-      this.params.pageNum = "1";
+      this.params.pageNum = "10";
+      this.params.pageSize = 1;
       this.params.captureTime = null;
       this.params.pokeball = null;
       this.params.playername = null;
@@ -316,8 +335,8 @@ export default {
     },
     cellStyle({ row, column, rowIndex, columnIndex }) {
       if (column.label === "玩家ID") {
-        return { color: "#1677FF", textAlign: "center" };
-      } else return { textAlign: "center" };
+        return { color: "#1677FF", textAlign: "center", whiteSpace: "nowrap" };
+      } else return { textAlign: "center", whiteSpace: "nowrap" };
     },
   },
 };

@@ -48,7 +48,11 @@
         style="width: 100%"
       >
         <el-table-column prop="playername" label="玩家ID" />
-        <el-table-column prop="createtime" label="操作时间" />
+        <el-table-column
+          prop="createtime"
+          label="操作时间"
+          :min-width="'100px'"
+        />
         <el-table-column prop="oper" label="操作状态">
           <template slot-scope="scope">
             <div v-if="scope.row.oper === 'join'">
@@ -62,15 +66,13 @@
           </template>
         </el-table-column>
       </el-table>
-      <!--      <el-pagination-->
-      <!--        v-show="tableData.length > 0"-->
-      <!--        :page-size="10"-->
-      <!--        @current-change="getList"-->
-      <!--        :current-page.sync="params.pageNum"-->
-      <!--        layout="->,total, prev, pager, next, jumper"-->
-      <!--        :total="total"-->
-      <!--      >-->
-      <!--      </el-pagination>-->
+      <el-pagination
+        @current-change="getList"
+        :current-page.sync="pageSize"
+        :page-size="10"
+        layout="->,total, prev, pager, next"
+        :total="total"
+      />
     </el-card>
   </div>
 </template>
@@ -85,12 +87,13 @@ export default {
       tableData: [],
       total: 0,
       params: {
-        pageSize: "10",
-        pageNum: 1,
+        pageNum: "10",
+        pageSize: 1,
         captureTime: null,
         playername: null,
         isOnlineOrOffline: null,
       },
+      pageSize: 1,
       pickerOptions: {
         disabledDate(time) {
           return time.getTime() > Date.now();
@@ -115,13 +118,18 @@ export default {
       loading: false,
     };
   },
+  watch: {
+    pageSize(newVal, oldVal) {
+      this.params.pageSize = this.pageSize.toString();
+    },
+  },
   created() {
     this.getList();
   },
   methods: {
     getList() {
       this.loading = true;
-      this.params.pageNum = this.params.pageNum.toString();
+      this.params.pageSize = this.params.pageSize.toString();
       serverOnlineQuitMsg(this.params).then((res) => {
         this.tableData = res.result.content.slice();
         this.total = res.result.totalSize;
@@ -129,8 +137,8 @@ export default {
       });
     },
     reset() {
-      this.params.pageSize = "10";
-      this.params.pageNum = "1";
+      this.params.pageNum = "10";
+      this.params.pageSize = 1;
       this.params.playername = null;
       this.params.captureTime = null;
       this.params.isOnlineOrOffline = null;

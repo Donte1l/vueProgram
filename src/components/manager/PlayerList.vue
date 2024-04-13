@@ -28,7 +28,7 @@ export default {
     },
     updateTime: {
       type: String,
-      required: true,
+      default: "time",
     },
   },
   methods: {
